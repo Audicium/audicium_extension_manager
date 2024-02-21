@@ -8,16 +8,12 @@ environment:
   flutter: ">=1.17.0"
 
 dependencies:
-  dio: ^5.4.0
+  dio: ^5.4.1
   flutter:
     sdk: flutter
   json_annotation: ^4.8.1
   logger: ^2.0.2+1
   serious_python:
-    git:
-      path: src/
-      ref: main
-      url: https://github.com/RA341/serious-python
 
 dev_dependencies:
   flutter_test:

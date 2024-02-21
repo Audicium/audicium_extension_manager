@@ -76,7 +76,7 @@ Future<void> loadScript({
   required String path,
   required String moduleName,
 }) async {
-  final res =  await manager!.worker.loadExtension(module: moduleName, filePath: path);
+  final res =  await manager!.server.loadExtension(module: moduleName, filePath: path);
 
   if (res != null){
     print(res);
