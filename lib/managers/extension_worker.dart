@@ -17,7 +17,6 @@ class ExtensionWorker {
         _logger = logger;
 
   static const homePageUrl = '/script/home';
-  static const loadExtensionUrl = '/script';
 
 ////////////////////////////////////////////////////////////////////////////////
   // core scraper functions
@@ -35,37 +34,4 @@ class ExtensionWorker {
   }
 
 
-////////////////////////////////////////////////////////////////////////////////
-  // extension management
-
-  Future<Map<String, dynamic>?> loadExtension({
-    CancelToken? cancelToken,
-    void Function(int, int)? onReceiveProgress,
-    void Function(int, int)? onSendProgress,
-    required String module,
-    required String filePath,
-  }) async {
-    final res = await _server.makePostRequestToExtension(
-      path: loadExtensionUrl,
-      body: {'module': module, 'path': filePath},
-      onReceiveProgress: onReceiveProgress,
-      cancelToken: cancelToken,
-      onSendProgress: onSendProgress,
-    );
-
-    return res;
-  }
-
-  Future<Map<String, dynamic>?> unLoadExtension({
-    CancelToken? cancelToken,
-    void Function(int, int)? onReceiveProgress,
-  }) async {
-    final res = await _server.makeGetRequestToExtension(
-        path: loadExtensionUrl,
-        onReceiveProgress: onReceiveProgress,
-        cancelToken: cancelToken);
-
-    return res;
-  }
-///////////////////////////////////////////////////////////////////////////
 }

@@ -21,6 +21,7 @@ class ExtensionServerManager {
 
   // paths
   static const healthCheckPath = '/';
+  static const loadExtensionUrl = '/script';
 
   late final String fullPath;
 
@@ -49,6 +50,39 @@ class ExtensionServerManager {
     _logger?.d('Python Result $res');
   }
 
+////////////////////////////////////////////////////////////////////////////////
+  // extension management
+
+  Future<Map<String, dynamic>?> loadExtension({
+    CancelToken? cancelToken,
+    void Function(int, int)? onReceiveProgress,
+    void Function(int, int)? onSendProgress,
+    required String module,
+    required String filePath,
+  }) async {
+    final res = await makePostRequestToExtension(
+      path: loadExtensionUrl,
+      body: {'module': module, 'path': filePath},
+      onReceiveProgress: onReceiveProgress,
+      cancelToken: cancelToken,
+      onSendProgress: onSendProgress,
+    );
+
+    return res;
+  }
+
+  Future<Map<String, dynamic>?> unLoadExtension({
+    CancelToken? cancelToken,
+    void Function(int, int)? onReceiveProgress,
+  }) async {
+    final res = await makeGetRequestToExtension(
+        path: loadExtensionUrl,
+        onReceiveProgress: onReceiveProgress,
+        cancelToken: cancelToken);
+
+    return res;
+  }
+
   Future<bool> healthCheck() async {
     try {
       final response = await _dio.get<void>(healthCheckPath);
@@ -74,6 +108,7 @@ class ExtensionServerManager {
     }
   }
 
+///////////////////////////////////////////////////////////////////////////
   String _buildPath(String path) => fullPath + path;
 
   Future<Map<String, dynamic>?> makeGetRequestToExtension({
